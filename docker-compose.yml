@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  meteo:
+    container_name: "meteo"
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    command: npm run start
+    ports:
+      - "5001:5001"
+    depends_on:
+      - mongometeo
+  mongometeo:
+    image: "mongo"
+    container_name: "mongometeo"
+    command: mongod --port 28017
+    ports:
+      - "28017:28017"
+    volumes:
+      - ./meteo-volume:/data/db
